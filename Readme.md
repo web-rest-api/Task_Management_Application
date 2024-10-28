@@ -50,6 +50,16 @@ PORT=3000
 npm run start
 ```
 
+### Using json-server as a Mock Database
+
+This project uses **json-server** to simulate a REST API for development.
+
+- Start **json-server** to serve data from `db.json`:
+
+```bash
+npm run json-server
+```
+
 ## Directory Structure
 
 ```
