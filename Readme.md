@@ -54,7 +54,6 @@ npm run start
 
 ```
 task-manager/
-├── src/
 │   ├── domain/
 │   │   ├── Task/
 │   │   │   ├── Task.js
