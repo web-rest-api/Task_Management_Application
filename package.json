@@ -1,0 +1,26 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon index.js"
+	},
+	"keywords": [
+		"task-manager",
+		"nodejs",
+		"domain-driven-design",
+		"task-tracker",
+		"express",
+		"project-management"
+	],
+	"author": "",
+	"license": "MIT",
+	"description": "A task management application built with Node.js, following Domain-Driven Design principles. This app allows users to organize tasks into categories, track due dates, and manage priorities, providing a scalable foundation for real-world project organization.",
+	"dependencies": {
+		"dotenv": "^16.4.5",
+		"express": "^4.21.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.7"
+	}
+}
