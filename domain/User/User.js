@@ -6,16 +6,10 @@ class User {
 	}
 
 	// Method to add a category for this user
-	addCategory(categoryId) {
-		if (!this.categories.includes(categoryId)) {
-			this.categories.push(categoryId)
-		}
-	}
+	addCategory() {}
 
 	// Method to remove a category
-	removeCategory(categoryId) {
-		this.categories = this.categories.filter((id) => id !== categoryId)
-	}
+	removeCategory() {}
 }
 
 module.exports = User

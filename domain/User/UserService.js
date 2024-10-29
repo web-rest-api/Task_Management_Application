@@ -1,24 +1,13 @@
 const Category = require("./Category")
 
 class CategoryService {
-	constructor() {
-		this.categories = new Map() // Simulate database with a Map
-	}
+	constructor() {}
 
 	// Method to create a new category
-	createCategory(id, name) {
-		const category = new Category(id, name)
-		this.categories.set(id, category)
-		return category
-	}
+	createCategory() {}
 
 	// Method to add a task to a category
-	addTaskToCategory(categoryId, taskId) {
-		const category = this.categories.get(categoryId)
-		if (category) {
-			category.addTask(taskId)
-		}
-	}
+	addTaskToCategory() {}
 }
 
 module.exports = CategoryService
