@@ -1,20 +1,13 @@
 class Task {
-	constructor(
-		id,
-		title,
-		description,
-		dueDate,
-		priority = "normal",
-		isComplete = false
-	) {
-		this.id = id
+	constructor(title, description, dueDate, priority = "normal") {
 		this.title = title
 		this.description = description
 		this.dueDate = dueDate
 		this.priority = priority
-		this.isComplete = isComplete
+		this.isComplete = false
 	}
 
+	/*
 	// Method to mark a task as complete
 	complete() {
 		this.isComplete = true
@@ -27,6 +20,8 @@ class Task {
 		if (dueDate) this.dueDate = dueDate
 		if (priority) this.priority = priority
 	}
+	no es necesario ???
+	*/
 }
 
 module.exports = Task

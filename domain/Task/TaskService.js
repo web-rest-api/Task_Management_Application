@@ -7,9 +7,8 @@ class TaskService {
 	}
 
 	// Create a new task
-	async createTask(id, title, description, dueDate, priority) {
+	async createTask(title, description, dueDate, priority) {
 		const task = {
-			id,
 			title,
 			description,
 			dueDate,
