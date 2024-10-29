@@ -1,21 +1,16 @@
-// src/domain/Task/TaskService.js
 const axios = require("axios")
+const Task = require("./Task")
+require("dotenv").config() // Load environment variables
 
 class TaskService {
 	constructor() {
-		this.apiUrl = "http://localhost:5000/tasks" // json-server URL for tasks
+		this.apiUrl = process.env.TASK_SERVICE_URI // json-server URL for tasks
 	}
 
 	// Create a new task
 	async createTask(title, description, dueDate, priority) {
-		const task = {
-			title,
-			description,
-			dueDate,
-			priority,
-			isComplete: false,
-		}
-		const response = await axios.post(this.apiUrl, task)
+		const newTask = new Task(title, description, dueDate, priority)
+		const response = await axios.post(this.apiUrl, newTask)
 		return response.data
 	}
 
