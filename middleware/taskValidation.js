@@ -36,8 +36,8 @@ exports.taskValidation = (req, res, next) => {
 			})
 
 		const newTaskData = new Task(title, description, dueDate, priority)
+		// pass data to the next middleware
 		req.newTaskData = newTaskData
-		req.userId = "12345" // Add userId to req object
 		next()
 	} catch (error) {
 		// Catch any other errors and respond with a 500 Internal Server Error
