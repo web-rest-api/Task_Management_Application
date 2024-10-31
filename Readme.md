@@ -15,6 +15,7 @@ A task management application built with Node.js, designed using Domain-Driven D
 - **Express**: Web framework for creating a RESTful API.
 - **dotenv**: For managing environment variables.
 - **Nodemon**: Development tool for auto-restarting the server.
+- **json-server**: a Node.js package that uses a JSON file as a database and automatically provides CRUD endpoints for each data type in the file
 
 ## Getting Started
 
