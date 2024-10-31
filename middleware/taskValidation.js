@@ -3,12 +3,13 @@ const Task = require("../domain/Task/Task")
 exports.taskValidation = (req, res, next) => {
 	try {
 		// Destructure request body and validate required fields
-		const { title, description, dueDate, priority } = req.body
+		const { userId, title, description, dueDate, priority } = req.body
 
-		if (!title || !description || !dueDate || !priority) {
+		if (!userId || !title || !description || !dueDate || !priority) {
 			// Respond with a 400 Bad Request if any required field is missing
 			return res.status(400).json({
-				error: "All fields are required: title, description, dueDate, priority",
+				error:
+					"All fields are required: userId, title, description, dueDate, priority",
 			})
 		}
 
@@ -35,7 +36,7 @@ exports.taskValidation = (req, res, next) => {
 				error: "Priority must be a string",
 			})
 
-		const newTaskData = new Task(title, description, dueDate, priority)
+		const newTaskData = new Task(userId, title, description, dueDate, priority)
 		// pass data to the next middleware
 		req.newTaskData = newTaskData
 		next()

@@ -8,8 +8,8 @@ class TaskService {
 	}
 
 	// Create a new task
-	async createTask(title, description, dueDate, priority) {
-		const newTask = new Task(title, description, dueDate, priority)
+	async createTask(userId, title, description, dueDate, priority) {
+		const newTask = new Task(userId, title, description, dueDate, priority)
 		const response = await axios.post(this.apiUrl, newTask)
 		return response.data
 	}

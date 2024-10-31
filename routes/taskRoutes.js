@@ -7,9 +7,10 @@ const taskRoutes = express.Router()
 const taskService = new TaskService()
 
 taskRoutes.post("/", taskValidation, async (req, res) => {
-	const { title, description, dueDate, priority } = req.newTaskData
+	const { userId, title, description, dueDate, priority } = req.newTaskData
 	try {
 		const newTask = await taskService.createTask(
+			userId,
 			title,
 			description,
 			dueDate,
@@ -17,11 +18,6 @@ taskRoutes.post("/", taskValidation, async (req, res) => {
 		)
 
 		res.status(201).json(newTask)
-
-		// Validate date format for dueDate if needed
-		// if (isNaN(Date.parse(dueDate))) {
-		// 	return res.status(400).json({ error: "Invalid date format for dueDate" });
-		// }
 	} catch (error) {
 		// Catch any other errors and respond with a 500 Internal Server Error
 		console.error("Error creating task:", error)

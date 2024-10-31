@@ -1,5 +1,6 @@
 class Task {
-	constructor(title, description, dueDate, priority = "normal") {
+	constructor(userId, title, description, dueDate, priority = "normal") {
+		this.userId = userId
 		this.title = title
 		this.description = description
 		this.dueDate = dueDate
