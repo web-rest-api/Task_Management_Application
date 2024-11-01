@@ -1,8 +1,9 @@
-const Category = require("./Category")
+const User = require("./UserService")
+require("dotenv").config() // Load environment variables
 
-class CategoryService {
+class UserService {
 	constructor() {
-		this.categories = new Map() // Simulate database with a Map
+		this.apiUrl = process.env.USER_SERVICE_URI // json-server URL for users
 	}
 
 	// Method to create a new category
@@ -21,4 +22,4 @@ class CategoryService {
 	}
 }
 
-module.exports = CategoryService
+module.exports = UserService

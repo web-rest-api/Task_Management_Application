@@ -5,6 +5,7 @@ exports.taskValidation = (req, res, next) => {
 		// Destructure request body and validate required fields
 		const { userId, title, description, dueDate, priority } = req.body
 
+		// not empty
 		if (!userId || !title || !description || !dueDate || !priority) {
 			// Respond with a 400 Bad Request if any required field is missing
 			return res.status(400).json({

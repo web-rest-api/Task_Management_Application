@@ -1,7 +1,7 @@
 class User {
-	constructor(id, username) {
-		this.id = id
-		this.username = username
+	constructor(userName, email) {
+		this.userName = userName
+		this.email = email
 		this.categories = [] // Array of category IDs owned by the user
 	}
 
