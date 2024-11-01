@@ -1,5 +1,22 @@
 {
-	"tasks": [],
-	"categories": [],
-	"users": []
+  "tasks": [
+    {
+      "id": "9ee8",
+      "userId": "7d87",
+      "title": "Complete DDD project",
+      "description": "Finish initial setup",
+      "dueDate": "2024-10-30",
+      "priority": "high",
+      "isComplete": false
+    }
+  ],
+  "categories": [],
+  "users": [
+    {
+      "id": "7d87",
+      "userName": "Mzar",
+      "email": "bob2@example.org",
+      "categories": []
+    }
+  ]
 }

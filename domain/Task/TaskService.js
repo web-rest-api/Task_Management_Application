@@ -14,6 +14,18 @@ class TaskService {
 		return response.data
 	}
 
+	// Get all Tasks
+	async getAllTasks() {
+		const response = await axios.get(this.apiUrl)
+		return response.data
+	}
+
+	// Get One task based oin the user's id
+	async getOneTaskById(userId) {
+		const response = await axios.get(`${this.apiUrl}?userId=${userId}`)
+		return response.data
+	}
+
 	// Complete a task
 	async completeTask(taskId) {
 		const response = await axios.patch(`${this.apiUrl}/${taskId}`, {
