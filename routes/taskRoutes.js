@@ -6,6 +6,20 @@ const taskRoutes = express.Router()
 // Initialize services
 const taskService = new TaskService()
 
+taskRoutes.get(
+	"/",
+	(req, res, next) => {
+		console.log("test middleware !")
+		const middleMessage = "hello from middleware !!!"
+		req.message = middleMessage
+		next()
+	},
+	(req, res) => {
+		console.log(req.message)
+		res.json({ msg: "hello from task route !" })
+	}
+)
+
 taskRoutes.post("/", taskValidation, async (req, res) => {
 	const { userId, title, description, dueDate, priority } = req.newTaskData
 	try {
