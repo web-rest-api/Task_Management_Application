@@ -5,10 +5,17 @@ exports.userValidation = async (req, res, next) => {
 		// Destructure request body and validate required fields
 		const { userName, email } = req.body
 
-		// Check if required fields are not empty
+		// Check empty for required fields 
 		if (!userName || !email) {
 			return res.status(400).json({
 				error: "All fields are required: email, userName",
+			})
+		}
+
+		// check type
+		if (typeof email !== "string" || typeof userName !== "string") {
+			return res.status(400).json({
+				error: "Email and userName must be strings !",
 			})
 		}
 

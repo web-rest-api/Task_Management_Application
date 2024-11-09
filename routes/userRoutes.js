@@ -23,3 +23,4 @@ userRoutes.post("/", userValidation, async (req, res) => {
 })
 
 module.exports = userRoutes
+
