@@ -5,6 +5,7 @@ const categoriesRoutes = express.Router()
 // Initialize services
 const categoriesService = new CategoryService()
 
+// ❗ add validation milddleware is user and category name exists (no repeats) use lowercase ! ❗
 categoriesRoutes.post("/", async (req, res) => {
 	const { userId, name } = req.body
 
@@ -20,6 +21,20 @@ categoriesRoutes.post("/", async (req, res) => {
 	}
 
 	//res.json({ msg: "categories post reached" })
+})
+
+// GET get one task based on the user's ID
+categoriesRoutes.get("/:userId", async (req, res) => {
+	const { userId } = req.params
+	try {
+		const allCategories = await categoriesService.getCategoryByUserId(userId)
+		if (!allCategories.length)
+			return res
+				.status(404)
+				.json({ msg: "no categories found with this ID..." })
+
+		res.json(allCategories)
+	} catch (error) {}
 })
 
 module.exports = categoriesRoutes

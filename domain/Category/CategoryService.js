@@ -10,11 +10,21 @@ class CategoryService {
 	// Method to create a new category
 	async createCategory(userId, name) {
 		const newCategory = new Category(userId, name)
-		console.log(newCategory)
 
 		const response = await axios.post(this.apiUrl, newCategory)
 		return response.data
 	}
+
+	// Get One task based oin the user's id
+	async getCategoryByUserId(userId) {
+		const response = await axios.get(`${this.apiUrl}?userId=${userId}`)
+		return response.data
+	}
+
+	// Method to add a task to a category
+	// async addTaskToCategory(categoryId, taskId) {
+	// 	const category = this.categories.get(categoryId)
+	// }
 }
 
 module.exports = CategoryService
