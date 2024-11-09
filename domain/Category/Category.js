@@ -1,6 +1,6 @@
 class Category {
-	constructor(id, name) {
-		this.id = id
+	constructor(userId, name) {
+		this.userId = userId
 		this.name = name
 		this.tasks = [] // Array of task IDs belonging to this category
 	}
