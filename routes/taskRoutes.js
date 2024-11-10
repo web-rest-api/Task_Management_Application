@@ -1,11 +1,12 @@
 const express = require("express")
 const TaskService = require("../domain/Task/TaskService")
-const { taskValidation } = require("../middleware/taskValidation")
+const { taskValidation, checkUserId } = require("../middleware/taskValidation")
 const taskRoutes = express.Router()
 
 // Initialize services
 const taskService = new TaskService()
 
+// POST create a new task
 taskRoutes.post("/", taskValidation, async (req, res) => {
 	const { userId, title, description, dueDate, priority } = req.newTaskData
 	try {
@@ -54,6 +55,16 @@ taskRoutes.get("/:userId", async (req, res) => {
 			.status(500)
 			.json({ error: "An error occurred while getting all the tasks" })
 	}
+})
+
+// PUT update a task based on its id
+taskRoutes.put("/:taskId", checkUserId, async (req, res) => {
+	const { taskId } = req.params
+	const { details } = req.body
+	console.log(details)
+
+	taskService.updateTask(taskId, details)
+	res.json({ msg: "patch reached " + taskId })
 })
 
 module.exports = taskRoutes

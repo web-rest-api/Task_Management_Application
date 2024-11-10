@@ -36,8 +36,9 @@ class TaskService {
 
 	// Update task details
 	async updateTask(taskId, details) {
-		const response = await axios.patch(`${this.apiUrl}/${taskId}`, details)
-		return response.data
+		//const response = await axios.put(`${this.apiUrl}/${taskId}`, details)
+		//return response.data
+		return details
 	}
 }
 

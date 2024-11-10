@@ -47,3 +47,9 @@ exports.taskValidation = (req, res, next) => {
 		res.status(500).json({ error: "An error occurred while creating the task" })
 	}
 }
+
+exports.checkUserId = (req, res, next) => {
+	const { userId } = req.body
+	console.log(userId)
+	next()
+}
