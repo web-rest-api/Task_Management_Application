@@ -1,13 +1,14 @@
 const express = require("express")
 const CategoryService = require("../domain/Category/CategoryService")
+const { categoryValidation } = require("../middleware/categoriesValidation")
 const categoriesRoutes = express.Router()
 
 // Initialize services
 const categoriesService = new CategoryService()
 
-// ❗ add validation milddleware is user and category name exists (no repeats) use lowercase ! ❗
-categoriesRoutes.post("/", async (req, res) => {
-	const { userId, name } = req.body
+// create a new category with normalized values and making sure the user doesn't have this category already
+categoriesRoutes.post("/", categoryValidation, async (req, res) => {
+	const { userId, name } = req.validData
 
 	try {
 		const newCategory = await categoriesService.createCategory(userId, name)
@@ -19,8 +20,6 @@ categoriesRoutes.post("/", async (req, res) => {
 			.status(500)
 			.json({ error: "An error occurred while creating the category" })
 	}
-
-	//res.json({ msg: "categories post reached" })
 })
 
 // GET get one task based on the user's ID
