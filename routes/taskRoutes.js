@@ -60,10 +60,12 @@ taskRoutes.get("/:userId", async (req, res) => {
 // PUT update a task based on its id
 taskRoutes.put("/:taskId", checkUserId, async (req, res) => {
 	const { taskId } = req.params
-	const { details } = req.body
+
+	const details = req.details
+
 	console.log(details)
 
-	taskService.updateTask(taskId, details)
+	// taskService.updateTask(taskId, details)
 	res.json({ msg: "patch reached " + taskId })
 })
 

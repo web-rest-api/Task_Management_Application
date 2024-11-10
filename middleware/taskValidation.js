@@ -1,3 +1,4 @@
+require("dotenv").config() // Load environment variables
 const Task = require("../domain/Task/Task")
 
 exports.taskValidation = (req, res, next) => {
@@ -48,8 +49,47 @@ exports.taskValidation = (req, res, next) => {
 	}
 }
 
-exports.checkUserId = (req, res, next) => {
+exports.checkUserId = async (req, res, next) => {
 	const { userId } = req.body
-	console.log(userId)
-	next()
+	const { title, description, dueDate, priority } = req.body
+
+	const details = {
+		userId,
+		title,
+		description,
+		dueDate,
+		priority,
+	}
+
+	try {
+		await checkEmailExists(userId)
+		req.details = details
+		next()
+	} catch (error) {
+		console.error("Error creating task:", error)
+		res
+			.status(500)
+			.json({ error: "An error occurred while creating the category ..." })
+	}
+}
+
+// Async function to check if email already exists
+async function checkEmailExists(userId) {
+	try {
+		const response = await fetch(`${process.env.USER_SERVICE_URI}/${userId}`)
+		console.log(response.ok)
+		if (!response.ok) throw new Error("Failed to check email in the database")
+
+		const data = await response.json()
+		return data
+
+		// console.log(data)
+
+		// if (data.length > 0) {
+		// 	throw new Error("Email already exists in the database!")
+		// }
+	} catch (error) {
+		console.error("Error:", error)
+		throw new Error(error.message || "Failed to check email in the database")
+	}
 }
