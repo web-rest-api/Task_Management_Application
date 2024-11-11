@@ -71,9 +71,7 @@ exports.checkUserId = async (req, res, next) => {
 		next()
 	} catch (error) {
 		console.error("Error creating task:", error)
-		res
-			.status(500)
-			.json({ error: "An error occurred while creating the category ..." })
+		res.status(500).json({ error: "An error occurred while finding user's id" })
 	}
 }
 
@@ -82,12 +80,15 @@ async function checkCategoryExists(userId) {
 	try {
 		const response = await fetch(`${process.env.USER_SERVICE_URI}/${userId}`)
 		console.log(response.ok)
-		if (!response.ok) throw new Error("Failed to check email in the database")
+		if (!response.ok)
+			throw new Error("Failed to check user's id in the database")
 
 		const data = await response.json()
 		return data
 	} catch (error) {
 		console.error("Error:", error)
-		throw new Error(error.message || "Failed to check email in the database")
+		throw new Error(
+			error.message || "Failed to check user's id in the database"
+		)
 	}
 }

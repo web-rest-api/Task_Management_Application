@@ -70,7 +70,7 @@ taskRoutes.put("/:taskId", checkUserId, async (req, res) => {
 })
 
 // DELETE delete a task by id
-taskRoutes.delete("/:taskId", async (req, res) => {
+taskRoutes.delete("/:taskId", checkUserId, async (req, res) => {
 	const { taskId } = req.params
 	try {
 		console.log(taskId)
