@@ -69,4 +69,17 @@ taskRoutes.put("/:taskId", checkUserId, async (req, res) => {
 	res.json({ msg: "patch reached " + taskId })
 })
 
+// DELETE delete a task by id
+taskRoutes.delete("/:taskId", async (req, res) => {
+	const { taskId } = req.params
+	try {
+		console.log(taskId)
+		const allTasks = await taskService.deleteTask(taskId)
+		res.json({ msg: allTasks })
+	} catch (error) {
+		// Catch any other errors and respond with a 500 Internal Server Error
+		res.status(error.status).json({ error: error.message })
+	}
+})
+
 module.exports = taskRoutes

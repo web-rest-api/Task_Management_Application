@@ -26,6 +26,14 @@ class TaskService {
 		return response.data
 	}
 
+	// delete task by task ID
+	async deleteTask(taskId) {
+		const response = await axios.delete(`${this.apiUrl}/${taskId}`)
+		if (response.status === 400)
+			throw new Error(`No task found with this ID: ${taskId}`)
+		return `Task successfully deleted. ID: ${taskId}`
+	}
+
 	// Complete a task
 	async completeTask(taskId) {
 		const response = await axios.patch(`${this.apiUrl}/${taskId}`, {
