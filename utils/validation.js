@@ -31,9 +31,11 @@ exports.validateRequiredFields = ({ fieldName, value } = data) => {
  * @returns {boolean} - Returns `true` if the field's value is a valid alphanumeric string.
  */
 exports.isStringAlphanumeric = ({ fieldName, value } = data) => {
+	console.log(fieldName)
+
 	const isAlphanumeric = (str) => /^[a-zA-Z0-9\s!?]+$/.test(str)
 	// title
-	if (typeof fieldName !== "string" || !isAlphanumeric(value)) {
+	if (typeof value !== "string" || !isAlphanumeric(value)) {
 		throw new Error(`${fieldName} must be a string with no weird characters !`)
 	}
 	return true
