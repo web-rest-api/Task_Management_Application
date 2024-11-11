@@ -1,9 +1,16 @@
 require("dotenv").config() // Load environment variables
+const { validateRequiredFields } = require("../utils/validation.js")
 
 exports.categoryValidation = async (req, res, next) => {
 	try {
 		// Destructure request body and validate required fields
 		const { userId, name } = req.body
+		// check empty
+		try {
+			validateRequiredFields({ fieldName: "name", value: name })
+		} catch (error) {
+			return res.status(400).json({ error: error.message })
+		}
 		// Check if category already exists for this user
 		try {
 			await checkRepeatedCategory(userId, name)

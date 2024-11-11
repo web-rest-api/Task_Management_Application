@@ -1,39 +1,43 @@
 require("dotenv").config() // Load environment variables
 const Task = require("../domain/Task/Task")
+const { validateRequiredFields } = require("../utils/validation")
 
 exports.taskValidation = (req, res, next) => {
 	try {
 		// Destructure request body and validate required fields
 		const { userId, title, description, dueDate, priority } = req.body
 
-		// not empty
-		if (!userId || !title || !description || !dueDate || !priority) {
-			// Respond with a 400 Bad Request if any required field is missing
-			return res.status(400).json({
-				error:
-					"All fields are required: userId, title, description, dueDate, priority",
-			})
+		// check empty for every field
+		try {
+			validateRequiredFields({ fieldName: "userId", value: userId })
+			validateRequiredFields({ fieldName: "title", value: title })
+			validateRequiredFields({ fieldName: "description", value: description })
+			validateRequiredFields({ fieldName: "dueDate", value: dueDate })
+			validateRequiredFields({ fieldName: "priority", value: priority })
+		} catch (error) {
+			// Handle the error response here
+			console.error("Validation error:", error.message)
+			return res.status(400).json({ error: error.message })
 		}
 
-		// type check
-		// alphanumeric check
+		// type check && alphanumeric check
 		const isAlphanumeric = (str) => /^[a-zA-Z0-9\s!?]+$/.test(str)
 		// title
 		if (typeof title !== "string" || !isAlphanumeric(title))
 			return res.status(400).json({
 				error: "Title must be a string with no weird characters !",
 			})
-		// description (YYYY-MM-DD)
-		if (typeof description !== "string")
+		// // description (YYYY-MM-DD)
+		if (typeof description !== "string" || !isAlphanumeric(title))
 			return res.status(400).json({
 				error: "Description must be a string",
 			})
-		// date format
+		// // date format
 		if (isNaN(Date.parse(dueDate))) {
 			return res.status(400).json({ error: "Invalid date format for dueDate" })
 		}
-		// priority
-		if (typeof priority !== "string")
+		// // priority
+		if (typeof priority !== "string" || !isAlphanumeric(title))
 			return res.status(400).json({
 				error: "Priority must be a string",
 			})
@@ -62,7 +66,7 @@ exports.checkUserId = async (req, res, next) => {
 	}
 
 	try {
-		await checkEmailExists(userId)
+		await checkCategoryExists(userId)
 		req.details = details
 		next()
 	} catch (error) {
@@ -74,7 +78,7 @@ exports.checkUserId = async (req, res, next) => {
 }
 
 // Async function to check if email already exists
-async function checkEmailExists(userId) {
+async function checkCategoryExists(userId) {
 	try {
 		const response = await fetch(`${process.env.USER_SERVICE_URI}/${userId}`)
 		console.log(response.ok)
@@ -82,12 +86,6 @@ async function checkEmailExists(userId) {
 
 		const data = await response.json()
 		return data
-
-		// console.log(data)
-
-		// if (data.length > 0) {
-		// 	throw new Error("Email already exists in the database!")
-		// }
 	} catch (error) {
 		console.error("Error:", error)
 		throw new Error(error.message || "Failed to check email in the database")

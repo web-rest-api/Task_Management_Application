@@ -1,3 +1,7 @@
+const {
+	validateRequiredFields,
+	isStringAlphanumeric,
+} = require("../utils/validation")
 require("dotenv").config() // Load environment variables
 
 exports.userValidation = async (req, res, next) => {
@@ -5,15 +9,22 @@ exports.userValidation = async (req, res, next) => {
 		// Destructure request body and validate required fields
 		const { userName, email } = req.body
 
-		// Check empty for required fields 
-		if (!userName || !email) {
-			return res.status(400).json({
-				error: "All fields are required: email, userName",
-			})
+		// required fields
+		try {
+			validateRequiredFields({ fieldName: "userName", value: userName })
+		} catch (error) {
+			return res.status(400).json({ error: error.message })
+		}
+
+		// type string and alphanumeric
+		try {
+			isStringAlphanumeric({ fieldName: "userName", value: userName })
+		} catch (error) {
+			return res.status(400).json({ error: error.message })
 		}
 
 		// check type
-		if (typeof email !== "string" || typeof userName !== "string") {
+		if (typeof email !== "string") {
 			return res.status(400).json({
 				error: "Email and userName must be strings !",
 			})
