@@ -40,3 +40,19 @@ exports.isStringAlphanumeric = ({ fieldName, value } = data) => {
 	}
 	return true
 }
+
+// Async function to check if email already exists
+exports.checkEmailExists = async (email) => {
+	try {
+		const response = await fetch(
+			`${process.env.USER_SERVICE_URI}?email=${email}`
+		)
+		const data = await response.json()
+		console.log(data)
+
+		return data
+	} catch (error) {
+		console.error("Error:", error)
+		throw new Error(error.message || "Failed to check email in the database")
+	}
+}

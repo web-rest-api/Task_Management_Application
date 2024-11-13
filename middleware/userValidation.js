@@ -1,6 +1,7 @@
 const {
 	validateRequiredFields,
 	isStringAlphanumeric,
+	checkEmailExists,
 } = require("../utils/validation")
 require("dotenv").config() // Load environment variables
 
@@ -47,7 +48,9 @@ exports.userValidation = async (req, res, next) => {
 
 		// Check if email already exists
 		try {
-			await checkEmailExists(email)
+			const registeredUser = await checkEmailExists(email)
+			if (registeredUser.length)
+				return res.status(400).json({ msg: "Email already in use" })
 		} catch (error) {
 			// Handle the error if the email already exists
 			return res.status(400).json({ error: error.message })
@@ -68,21 +71,4 @@ const validateEmail = (email) => {
 	return email.match(
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	)
-}
-
-// Async function to check if email already exists
-async function checkEmailExists(email) {
-	try {
-		const response = await fetch(
-			`${process.env.USER_SERVICE_URI}?email=${email}`
-		)
-		const data = await response.json()
-
-		if (data.length > 0) {
-			throw new Error("Email already exists in the database!")
-		}
-	} catch (error) {
-		console.error("Error:", error)
-		throw new Error(error.message || "Failed to check email in the database")
-	}
 }

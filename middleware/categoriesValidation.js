@@ -2,12 +2,13 @@ require("dotenv").config() // Load environment variables
 const {
 	validateRequiredFields,
 	isStringAlphanumeric,
+	checkEmailExists,
 } = require("../utils/validation.js")
 
 exports.categoryValidation = async (req, res, next) => {
 	try {
 		// Destructure request body and validate required fields
-		const { userId, name } = req.body
+		const { userId, name, email } = req.body
 		// check empty
 		try {
 			validateRequiredFields({ fieldName: "name", value: name })
@@ -18,6 +19,18 @@ exports.categoryValidation = async (req, res, next) => {
 		try {
 			isStringAlphanumeric({ fieldName: "name", value: name })
 		} catch (error) {
+			return res.status(400).json({ error: error.message })
+		}
+		// check if the we can add a category for a non existent user
+		try {
+			const registeredUser = await checkEmailExists(email)
+
+			if (!registeredUser.length)
+				return res
+					.status(400)
+					.json({ error: "We cannot create a category for this user" })
+		} catch (error) {
+			// Handle the error if the email already exists
 			return res.status(400).json({ error: error.message })
 		}
 
