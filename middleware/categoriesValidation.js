@@ -3,12 +3,16 @@ const {
 	validateRequiredFields,
 	isStringAlphanumeric,
 	checkEmailExists,
+	checkUserIdExists,
 } = require("../utils/validation.js")
 
 exports.categoryValidation = async (req, res, next) => {
 	try {
 		// Destructure request body and validate required fields
 		const { userId, name, email } = req.body
+
+		console.log(userId, name, email)
+
 		// check empty
 		try {
 			validateRequiredFields({ fieldName: "name", value: name })
@@ -24,13 +28,26 @@ exports.categoryValidation = async (req, res, next) => {
 		// check if the we can add a category for a non existent user
 		try {
 			const registeredUser = await checkEmailExists(email)
-
 			if (!registeredUser.length)
 				return res
 					.status(400)
 					.json({ error: "We cannot create a category for this user" })
 		} catch (error) {
 			// Handle the error if the email already exists
+			return res.status(400).json({ error: error.message })
+		}
+
+		// check if the user's id exists in our db
+		try {
+			const checkedUserId = await checkUserIdExists(userId)
+			console.log(checkedUserId)
+
+			if (!checkedUserId)
+				return res
+					.status(400)
+					.json({ error: "We cannot create a category for this user" })
+		} catch (error) {
+			// Handle the error for suer's id check
 			return res.status(400).json({ error: error.message })
 		}
 

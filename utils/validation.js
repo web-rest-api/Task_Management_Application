@@ -48,9 +48,22 @@ exports.checkEmailExists = async (email) => {
 			`${process.env.USER_SERVICE_URI}?email=${email}`
 		)
 		const data = await response.json()
-		console.log(data)
+		//console.log(data)
 
 		return data
+	} catch (error) {
+		console.error("Error:", error)
+		throw new Error(error.message || "Failed to check email in the database")
+	}
+}
+
+// Async function to check if email already exists
+exports.checkUserIdExists = async (userId) => {
+	try {
+		const response = await fetch(`${process.env.USER_SERVICE_URI}/${userId}`)
+		const ok = await response.ok
+
+		return ok
 	} catch (error) {
 		console.error("Error:", error)
 		throw new Error(error.message || "Failed to check email in the database")
